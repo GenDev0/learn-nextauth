@@ -29,7 +29,12 @@ function SignInComponent({ providers, csrfToken }: Props) {
           <div key={provider.name} className={"mt-4"}>
             <button
               className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'
-              onClick={(e) => signIn(provider.id)}
+              onClick={(e) =>
+                signIn(provider.id, {
+                  callbackUrl:
+                    process.env.VERCEL_URL || "http://localhost:3000",
+                })
+              }
             >
               Sign In with {provider.name}
             </button>
@@ -41,24 +46,3 @@ function SignInComponent({ providers, csrfToken }: Props) {
 }
 
 export default SignInComponent;
-type Prop = {
-  req: IncomingMessage | undefined;
-};
-
-export async function getServerSideProps(
-  context: CtxOrReq | undefined,
-  { req }: Prop
-) {
-  const session = await getSession({ req });
-  if (session) {
-    // Signed in
-    return {
-      redirect: { destination: "https://learn-nextauth-mocha.vercel.app/" },
-    };
-  }
-  const csrfToken = await getCsrfToken(context);
-  const providers = await getProviders();
-  return {
-    props: { csrfToken, providers },
-  };
-}
