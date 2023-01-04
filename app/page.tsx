@@ -8,7 +8,7 @@ export default async function HomePage() {
   return (
     <main>
       <div>
-        <WelcomePage />
+        <WelcomePage session={session} />
       </div>
     </main>
   );
