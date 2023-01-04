@@ -29,7 +29,13 @@ function SignInComponent({ providers, csrfToken }: Props) {
           <div key={provider.name} className={"mt-4"}>
             <button
               className='bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded'
-              onClick={(e) => signIn(provider.id)}
+              onClick={(e) =>
+                signIn(provider.id, {
+                  callbackUrl:
+                    process.env.NEXTAUTH_URL_INTERNAL ||
+                    "http://localhost:3000",
+                })
+              }
             >
               Sign In with {provider.name}
             </button>
