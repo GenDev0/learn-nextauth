@@ -53,7 +53,7 @@ export async function getServerSideProps(
   if (session) {
     // Signed in
     return {
-      redirect: { destination: "/" },
+      redirect: { destination: "https://learn-nextauth-mocha.vercel.app/" },
     };
   }
   const csrfToken = await getCsrfToken(context);
