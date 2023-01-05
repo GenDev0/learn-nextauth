@@ -6,6 +6,7 @@ import GitHubProvider from "next-auth/providers/github";
 import TwitterProvider from "next-auth/providers/twitter";
 import GoogleProvider from "next-auth/providers/google";
 import Auth0Provider from "next-auth/providers/auth0";
+import { Session } from "next-auth";
 // import EmailProvider from "next-auth/providers/email";
 
 export const authOptions = {
@@ -58,6 +59,11 @@ export const authOptions = {
   secret: process.env.NEXTAUTH_SECRET,
   pages: {
     signIn: "/auth/signin",
+  },
+  callbacks: {
+    session({ session }: any) {
+      return session; // The return type will match the one returned in `useSession()`
+    },
   },
 };
 export default NextAuth(authOptions);
